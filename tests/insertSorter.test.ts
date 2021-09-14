@@ -1,5 +1,5 @@
 import Checker from "@/utils/Checker";
-import $defaultSorter from "@/sorterAlgorithm/$defaultSorter";
+import _defaultSorter from "@/sorterAlgorithm/_defaultSorter";
 import insertSorter from "@/sorterAlgorithm/insertSorter";
 
-Checker.main(insertSorter, $defaultSorter, 1, 10000, 10000);
+Checker.main(insertSorter, _defaultSorter, 1, 10000, 10000);
