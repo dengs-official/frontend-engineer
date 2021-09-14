@@ -1,6 +1,6 @@
 export default class Counter {
-  private name: string
-  private count: number
+  private name: string;
+  private count: number;
   constructor(id: string) {
     this.name = id;
     this.count = 0;
