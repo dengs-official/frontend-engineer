@@ -1,13 +1,17 @@
-type func = (arg: number[]) => number[];
+import _defaultSort from "@/sorterAlgorithm/_defaultSorter";
+
+type sortFunc = (values: number[]) => number[];
+type searchFunc = (array: number[], target: number) => [boolean, number];
 /**
  * 对数器
  *
  * 检测某个算法结果是否正确
  */
 export default class Checker {
-  static mainSort(testFunc: func, rightFunc: func, testTimes: number, maxSize: number, maxValue: number): void {
+  static mainSort(testFunc: sortFunc, rightFunc: sortFunc, testTimes: number, maxSize: number, maxValue: number): void {
     console.time("Execute");
     console.log("Executing");
+
     let isCorrect = true;
     for (let i = 0; i < testTimes; i++) {
       const origArray = Checker.generateRandomArray(maxSize, maxValue);
@@ -21,6 +25,31 @@ export default class Checker {
         break;
       }
     }
+
+    console.log("Execute Result: " + (isCorrect ? "Good!" : "Fucking off!"));
+    console.timeEnd("Execute");
+  }
+  static mainSearch(
+    testFunc: searchFunc,
+    rightFunc: searchFunc,
+    testTimes: number,
+    maxSize: number,
+    maxValue: number,
+    judgeFunc = (a: [boolean, number], b: [boolean, number]) => a[0] === b[0]
+  ): void {
+    console.time("Execute");
+    console.log("Executing");
+
+    let isCorrect = true;
+    for (let i = 0; i < testTimes; i++) {
+      const array = _defaultSort(Checker.generateRandomArray(maxSize, maxValue));
+      const target = Math.ceil(Math.random() * maxValue) * 2;
+      if (!judgeFunc(testFunc(array, target), rightFunc(array, target))) {
+        isCorrect = false;
+        break;
+      }
+    }
+
     console.log("Execute Result: " + (isCorrect ? "Good!" : "Fucking off!"));
     console.timeEnd("Execute");
   }
