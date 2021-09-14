@@ -5,7 +5,7 @@ type func = (arg: number[]) => number[];
  * 检测某个算法结果是否正确
  */
 export default class Checker {
-  static main(testFunc: func, rightFunc: func, testTimes: number, maxSize: number, maxValue: number): void {
+  static mainSort(testFunc: func, rightFunc: func, testTimes: number, maxSize: number, maxValue: number): void {
     console.time("Execute");
     console.log("Executing");
     let isCorrect = true;
