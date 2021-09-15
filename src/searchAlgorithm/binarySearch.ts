@@ -10,7 +10,7 @@
  */
 export default function binarySearch(array: number[], target: number): [boolean, number] {
   let index = (function find(start: number, end: number): number | undefined {
-    const mid = Math.ceil((start + end) / 2);
+    const mid = start + Math.ceil((end - start) >> 1);
     if (array[mid] === target) {
       return mid;
     }
