@@ -1,3 +1,6 @@
+/**
+ * 基于数组实现的定容栈
+ */
 export default class FixedStack<T> implements Iterable<T> {
   private value: T[];
   private N: number;
