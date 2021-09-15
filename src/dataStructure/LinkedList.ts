@@ -1,9 +1,14 @@
+type toStingFn<T> = (arg: T) => string;
+
 export class LinkedListNode<T> {
   public item: T;
   public next: LinkedListNode<T> | null;
   constructor(item: T, next: LinkedListNode<T> | null = null) {
     this.item = item;
     this.next = next;
+  }
+  toString(fn: toStingFn<T>): string {
+    return fn ? fn(this.item) : `${this.item}`;
   }
 }
 
