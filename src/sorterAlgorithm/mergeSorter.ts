@@ -17,21 +17,23 @@ export default function mergeSorter(values: number[]): number[] {
     if (start === end) {
       return;
     }
-    const mid = start + ((end - start) >> 1);
-    process(start, mid);
-    process(mid + 1, end);
-    merge(values, start, mid, end);
+    const mid = start + ((end - start) >> 1); // 找到中间位置
+    process(start, mid); // 左侧进行排序
+    process(mid + 1, end); // 右侧进行排序
+    merge(values, start, mid, end); // 左右部分合并
   })(0, len - 1);
   return values;
 }
 
 function merge(values: number[], start: number, mid: number, end: number): void {
   const tempArr = [];
-  let leftPoint = start;
-  let rightPoint = mid + 1;
+  let leftPoint = start; //左侧部分起始下标
+  let rightPoint = mid + 1; // 右侧部分起始下标
   while (leftPoint <= mid && rightPoint <= end) {
+    // 当都没有越界时，左右值做对比，如果左侧值小于等于右侧值，将左侧值放入临时数组，同时左标下移，右侧同理
     tempArr.push(values[leftPoint] <= values[rightPoint] ? values[leftPoint++] : values[rightPoint++]);
   }
+  // 将左侧或右侧剩余部分放进数组
   while (leftPoint <= mid) {
     tempArr.push(values[leftPoint++]);
   }
