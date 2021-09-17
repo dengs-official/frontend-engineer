@@ -19,7 +19,7 @@ export default class Queue<T> implements Iterable<T> {
     return this.linkedList.insertTail(item);
   }
   public dequeue(): T | null {
-    const deleteItem = this.linkedList.deleteHead();
-    return deleteItem ? deleteItem.item : null;
+    const dequeueItem = this.linkedList.deleteHead();
+    return dequeueItem ? dequeueItem.item : null;
   }
 }
