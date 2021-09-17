@@ -83,10 +83,12 @@ export default class Heap<T> {
     this.heapfiySwin();
   }
   public pop(): T | null {
-    if (!this.size()) {
+    const size = this.size();
+    if (!size) {
       return null;
     }
-    const popNode = this.container.shift() as T;
+    swap(0, size - 1, this.container);
+    const popNode = this.container.pop() as T;
     this.heapfiySink();
     return popNode;
   }
