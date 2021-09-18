@@ -1,5 +1,5 @@
 /**
- * 桶排序
+ * 基数排序
  *
  * 时间复杂度O(N), 空间复杂度O(N)
  *
@@ -9,7 +9,7 @@
  * @param values
  * @returns
  */
-export default function bucketSorter(values: number[]): number[] {
+export default function radixSorter(values: number[]): number[] {
   const len = values.length;
   if (len < 2) {
     return values;
