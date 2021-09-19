@@ -1,6 +1,6 @@
 import _defaultSort from "@/sorterAlgorithm/_defaultSorter";
 
-type sortFunc = (values: number[]) => number[];
+type sortFunc = (values: number[], ...rest: number[]) => number[];
 type searchFunc = (array: number[], target: number) => [boolean, number];
 /**
  * 对数器
@@ -8,7 +8,14 @@ type searchFunc = (array: number[], target: number) => [boolean, number];
  * 检测某个算法结果是否正确
  */
 export default class Checker {
-  static mainSort(testFunc: sortFunc, rightFunc: sortFunc, testTimes: number, maxSize: number, maxValue: number): void {
+  static mainSort(
+    testFunc: sortFunc,
+    rightFunc: sortFunc,
+    testTimes: number,
+    maxSize: number,
+    maxValue: number,
+    ...rest: number[]
+  ): void {
     console.time("Execute");
     console.log("Executing");
 
@@ -17,8 +24,8 @@ export default class Checker {
       const origArray = Checker.generateRandomArray(maxSize, maxValue);
       let testArray = Checker.copyArray(origArray);
       let rightArray = Checker.copyArray(origArray);
-      testArray = testFunc(testArray);
-      rightArray = rightFunc(rightArray);
+      testArray = testFunc(testArray, ...rest);
+      rightArray = rightFunc(rightArray, ...rest);
       // Checker.printArray(rightArray);
       if (!Checker.isEqual(testArray, rightArray)) {
         isCorrect = false;
