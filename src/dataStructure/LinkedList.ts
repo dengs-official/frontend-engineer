@@ -129,4 +129,18 @@ export default class LinkedList<T> implements Iterable<T> {
     }
     return delNode;
   }
+  public reverse(node?: LinkedListNode<T>): LinkedListNode<T> | null {
+    this.tail = this.head;
+    let prevNode = null,
+      currNode = node || this.head,
+      nextNode = null;
+    while (currNode) {
+      nextNode = currNode.next;
+      currNode.next = prevNode;
+      prevNode = currNode;
+      currNode = nextNode;
+    }
+    this.head = prevNode;
+    return currNode;
+  }
 }

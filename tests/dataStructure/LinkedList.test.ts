@@ -2,7 +2,7 @@ import LinkedList from "@/dataStructure/LinkedList";
 
 const link = new LinkedList<number>();
 
-link.deleteHead();
+// link.deleteHead();
 link.insertTail(1);
 link.insertHead(2);
 link.insertHead(3);
@@ -17,4 +17,9 @@ link.insertTail(8);
 // console.log(link);
 for (const item of link) {
   console.log("loop " + item);
+}
+console.log("----");
+link.reverse();
+for (const item of link) {
+  console.log("loop1 " + item);
 }
