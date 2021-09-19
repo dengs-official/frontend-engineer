@@ -1,5 +1,5 @@
-type toStingFn<T> = (arg: T) => string;
-
+export type toStingFn<T> = (arg: T) => string;
+export type loopFn<T> = (item: T, index: number) => void;
 export class LinkedListNode<T> {
   public item: T;
   public next: LinkedListNode<T> | null;
@@ -7,15 +7,15 @@ export class LinkedListNode<T> {
     this.item = item;
     this.next = next;
   }
-  toString(fn: toStingFn<T>): string {
-    return fn ? fn(this.item) : `${this.item}`;
+  toString(callback?: toStingFn<T>): string {
+    return callback ? callback(this.item) : `${this.item}`;
   }
 }
 
 export default class LinkedList<T> implements Iterable<T> {
-  private head: LinkedListNode<T> | null;
-  private tail: LinkedListNode<T> | null;
-  private N: number;
+  protected head: LinkedListNode<T> | null;
+  protected tail: LinkedListNode<T> | null;
+  protected N: number;
   constructor() {
     this.head = null;
     this.tail = null;
@@ -57,33 +57,32 @@ export default class LinkedList<T> implements Iterable<T> {
    * 表头插入节点
    * @param item
    */
-  public insertHead(item: T): number {
+  public insertHead(item: T): LinkedListNode<T> {
     const newNode = new LinkedListNode(item, this.head);
     this.N++;
     this.head = newNode;
     if (!this.tail) {
       this.tail = newNode;
     }
-    return this.size();
+    return newNode;
   }
   /**
    * 表尾插入节点
    * @param item
    * @returns
    */
-  public insertTail(item: T): number {
+  public insertTail(item: T): LinkedListNode<T> {
     const newNode = new LinkedListNode(item);
     this.N++;
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
-      return this.size();
+      return newNode;
     }
-    if (this.tail) {
-      this.tail.next = newNode;
-    }
+    (this.tail as LinkedListNode<T>).next = newNode;
+
     this.tail = newNode;
-    return this.size();
+    return newNode;
   }
   /**
    * 表头删除节点
@@ -98,8 +97,7 @@ export default class LinkedList<T> implements Iterable<T> {
     if (delNode.next) {
       this.head = delNode.next;
     } else {
-      this.head = null;
-      this.tail = null;
+      this.head = this.tail = null;
     }
     return delNode;
   }
@@ -111,8 +109,7 @@ export default class LinkedList<T> implements Iterable<T> {
     const delNode = this.tail;
     delNode && this.N--;
     if (this.head === this.tail) {
-      this.head = null;
-      this.tail = null;
+      this.head = this.tail = null;
       return delNode;
     }
     // 遍历获取最后一个元素的前一个元素设置为tail，并将next设置为null
@@ -129,7 +126,7 @@ export default class LinkedList<T> implements Iterable<T> {
     }
     return delNode;
   }
-  public reverse(node?: LinkedListNode<T>): LinkedListNode<T> | null {
+  public reverse(node?: LinkedListNode<T>): LinkedListNode<T> | LinkedListNode<T>[] | null {
     this.tail = this.head;
     let prevNode = null,
       currNode = node || this.head,
@@ -141,6 +138,33 @@ export default class LinkedList<T> implements Iterable<T> {
       currNode = nextNode;
     }
     this.head = prevNode;
-    return currNode;
+    return this.head;
+  }
+  /** 迭代操作 */
+  public fromArray(items: T[]): LinkedListNode<T> | null {
+    items.forEach((item) => {
+      this.insertTail(item);
+    });
+    return this.head;
+  }
+  public toArray(): LinkedListNode<T>[] {
+    const array: LinkedListNode<T>[] = [];
+    this.loopFromHead((node) => {
+      array.push(node);
+    });
+    return array;
+  }
+  public loopFromHead(callback: loopFn<LinkedListNode<T>>): void {
+    let currNode = this.head,
+      currIndex = 0;
+    while (currNode) {
+      callback(currNode, currIndex++);
+      currNode = currNode.next;
+    }
+  }
+  public toString(callback?: toStingFn<T>): string {
+    return this.toArray()
+      .map((node) => node.toString(callback))
+      .toString();
   }
 }
