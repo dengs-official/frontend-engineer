@@ -15,8 +15,8 @@ export default class Queue<T> implements Iterable<T> {
   public size(): number {
     return this.linkedList.size();
   }
-  public enqueue(item: T): number {
-    return this.linkedList.insertTail(item);
+  public enqueue(item: T): T {
+    return this.linkedList.insertTail(item).item;
   }
   public dequeue(): T | null {
     const dequeueItem = this.linkedList.deleteHead();

@@ -27,12 +27,16 @@ export default class LinkedList<T> implements Iterable<T> {
    * @returns
    */
   [Symbol.iterator](): Iterator<T> {
-    let pointer = this.head;
+    let node = this.head,
+      pointer = 0;
+    const N = this.N;
     return {
       next(): IteratorResult<T> {
-        if (pointer) {
-          const value = pointer.item;
-          pointer = pointer.next;
+        if (pointer < N) {
+          node as LinkedListNode<T>;
+          const value = (node as LinkedListNode<T>).item;
+          node = (node as LinkedListNode<T>).next;
+          pointer++;
           return { value, done: false };
         }
         return { value: null, done: true };
@@ -157,9 +161,9 @@ export default class LinkedList<T> implements Iterable<T> {
   public loopFromHead(callback: loopFn<LinkedListNode<T>>): void {
     let currNode = this.head,
       currIndex = 0;
-    while (currNode) {
-      callback(currNode, currIndex++);
-      currNode = currNode.next;
+    while (currIndex < this.N) {
+      callback(currNode as LinkedListNode<T>, currIndex++);
+      currNode = (currNode as LinkedListNode<T>).next;
     }
   }
   public toString(callback?: toStingFn<T>): string {

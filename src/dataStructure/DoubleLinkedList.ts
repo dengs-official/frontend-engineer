@@ -147,9 +147,9 @@ export default class DoubleLinkedList<T> extends LinkedList<T> {
   public loopFromTail(callback: loopFn<DoubleLinkedListNode<T>>): void {
     let currNode = this.tail,
       currIndex = this.N;
-    while (currNode) {
-      callback(currNode, currIndex--);
-      currNode = currNode.prev;
+    while (currIndex) {
+      callback(currNode as DoubleLinkedListNode<T>, --currIndex);
+      currNode = (currNode as DoubleLinkedListNode<T>).prev;
     }
   }
 }

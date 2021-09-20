@@ -14,8 +14,8 @@ export default class Stack<T> implements Iterable<T> {
   public size(): number {
     return this.linkedList.size();
   }
-  public push(item: T): number {
-    return this.linkedList.insertHead(item);
+  public push(item: T): T {
+    return this.linkedList.insertHead(item).item;
   }
   public pop(): T | null {
     const popNode = this.linkedList.deleteHead();
