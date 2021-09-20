@@ -1,4 +1,4 @@
-import swap from "@/common/swap";
+import { swap } from "@/utils/Misc";
 import Comparator, { compareFn } from "@/comparator/Comparator";
 
 export default class Heap<T> {

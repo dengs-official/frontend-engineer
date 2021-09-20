@@ -1,4 +1,4 @@
-import swap from "@/common/swap";
+import { swap } from "@/utils/Misc";
 
 /**
  * 快速排序

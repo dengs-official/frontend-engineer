@@ -1,4 +1,4 @@
-export default function swap<T>(i: number, j: number, values: T[]): void {
+export function swap<T>(i: number, j: number, values: T[]): void {
   const tempVal = values[i];
   values[i] = values[j];
   values[j] = tempVal;
