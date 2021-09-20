@@ -81,11 +81,11 @@ export default class DoubleLinkedList<T> extends LinkedList<T> {
   }
   public deleteTail(): DoubleLinkedListNode<T> | null {
     const delNode = this.tail;
+    delNode && this.N--;
     if (this.head === this.tail) {
       this.head = this.tail = null;
       return delNode;
     }
-    this.N--;
     this.tail = (delNode as DoubleLinkedListNode<T>).prev;
     (this.tail as DoubleLinkedListNode<T>).next = null;
     return delNode;
@@ -99,10 +99,12 @@ export default class DoubleLinkedList<T> extends LinkedList<T> {
   public delete(node: DoubleLinkedListNode<T>): DoubleLinkedListNode<T> {
     if (this.head === this.tail) {
       if (node === this.head) {
+        this.N--;
         this.head = this.tail = null;
       }
       return node;
     }
+    this.N--;
     if (node === this.head) {
       return this.deleteHead() as DoubleLinkedListNode<T>;
     }
