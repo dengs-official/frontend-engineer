@@ -1,4 +1,4 @@
-import LinkedList, { loopFn, toStingFn } from "./LinkedList";
+import LinkedList, { LinkedListNode, loopFn, toStingFn } from "./LinkedList";
 
 export class DoubleLinkedListNode<T> {
   public item: T;
@@ -132,6 +132,17 @@ export default class DoubleLinkedList<T> extends LinkedList<T> {
     }
     this.head = prevNode;
     return [this.head as DoubleLinkedListNode<T>, this.tail as DoubleLinkedListNode<T>];
+  }
+  /** 迭代操作 */
+  public fromArray(items: T[]): DoubleLinkedListNode<T> | null {
+    super.fromArray(items);
+    return this.head;
+  }
+  public toArray(): DoubleLinkedListNode<T>[] {
+    return super.toArray() as DoubleLinkedListNode<T>[];
+  }
+  public loopFromHead(callback: loopFn<DoubleLinkedListNode<T>>): void {
+    super.loopFromHead(callback as loopFn<LinkedListNode<T>>);
   }
   public loopFromTail(callback: loopFn<DoubleLinkedListNode<T>>): void {
     let currNode = this.tail,
