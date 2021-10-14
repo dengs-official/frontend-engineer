@@ -3,22 +3,21 @@ const MyPromise = require("./MyPromise.js");
 const myPromise = new MyPromise((resolve, reject) => {
   setTimeout(() => {
     // resolve(100);
-    reject("error");
   }, 1000);
+  reject("error");
 });
 
-const myPromise2 = myPromise
-  .then
-  // (val) => {
-  //   console.log(val);
-  //   return { name: val + 1 };
-  //   // return myPromise2;
-  // },
-  // (e) => {
-  //   console.error("error ", e);
-  //   return "handle error";
-  // }
-  ();
+const myPromise2 = myPromise.then(
+  (val) => {
+    console.log(val);
+    return { name: val + 1 };
+    // return myPromise2;
+  },
+  (e) => {
+    console.error("error ", e);
+    return "handle error";
+  }
+);
 
 myPromise2.then(
   (val) => {

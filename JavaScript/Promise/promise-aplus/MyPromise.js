@@ -43,19 +43,6 @@ module.exports = class MyPromise {
             reject,
             FULFILLED
           );
-          // 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值
-          // if (!isFn(onFulfilled)) {
-          //   resolve(this._value);
-          // } else {
-          //   let value;
-          //   try {
-          //     value = onFulfilled(this._value);
-          //   } catch {
-          //     reject(e);
-          //   }
-          //   // 执行 Promise解决过程
-          //   this._resolution(promise2, value, resolve, reject);
-          // }
         });
         // 保存拒绝回调
         this._onRejectedCallbacks.push(() => {
@@ -67,19 +54,6 @@ module.exports = class MyPromise {
             reject,
             REJECTED
           );
-          // 如果 onRejected 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因
-          // if (!isFn(onRejected)) {
-          //   reject(this._reason);
-          // } else {
-          //   let value;
-          //   try {
-          //     value = onRejected(this._reason);
-          //   } catch (e) {
-          //     reject(e);
-          //   }
-          //   // 执行 Promise解决过程
-          //   this._resolution(promise2, value, resolve, reject);
-          // }
         });
       });
       return promise2;
@@ -88,20 +62,17 @@ module.exports = class MyPromise {
     if (this._state === FULFILLED) {
       let promise2;
       promise2 = new MyPromise((resolve, reject) => {
-        this._returnPromiseLogic(
-          onFulfilled,
-          this._value,
-          promise2,
-          resolve,
-          reject,
-          FULFILLED
-        );
-        // if (!isFn(onFulfilled)) {
-        //   resolve(this._value);
-        // } else {
-        //   const value = onFulfilled(this._value);
-        //   this._resolution(promise2, value, resolve, reject);
-        // }
+        // setTimeout(() => {
+        process.nextTick(() => {
+          this._returnPromiseLogic(
+            onFulfilled,
+            this._value,
+            promise2,
+            resolve,
+            reject,
+            FULFILLED
+          );
+        });
       });
       return promise2;
     }
@@ -109,20 +80,17 @@ module.exports = class MyPromise {
     if (this._state === REJECTED) {
       let promise2;
       promise2 = new MyPromise((resolve, reject) => {
-        this._returnPromiseLogic(
-          onRejected,
-          this._reason,
-          promise2,
-          resolve,
-          reject,
-          REJECTED
-        );
-        // if (!isFn(onRejected)) {
-        //   reject(this._reason);
-        // } else {
-        //   const value = onRejected(this._reason);
-        //   this._resolution(myPromise, value, resolve, reject);
-        // }
+        // setTimeout(() => {
+        process.nextTick(() => {
+          this._returnPromiseLogic(
+            onRejected,
+            this._reason,
+            promise2,
+            resolve,
+            reject,
+            REJECTED
+          );
+        });
       });
       return promise2;
     }
@@ -170,7 +138,8 @@ module.exports = class MyPromise {
     this._value = value;
     // onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用
     // 当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调
-    setTimeout(() => {
+    // setTimeout(() => {
+    process.nextTick(() => {
       this._onResolvedCallbacks.forEach((callback) => {
         callback(this._value);
       });
@@ -186,7 +155,8 @@ module.exports = class MyPromise {
     this._reason = reason;
     // onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用
     // 当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调
-    setTimeout(() => {
+    // setTimeout(() => {
+    process.nextTick(() => {
       this._onRejectedCallbacks.forEach((callback) => {
         callback(this._reason);
       });
@@ -203,9 +173,7 @@ module.exports = class MyPromise {
     if (x === promise) {
       // x 与 promise相等
       reject(
-        new TypeError(
-          "Chaining cycle detected for myPromise #<MyPromise>"
-        ).toString()
+        new TypeError("Chaining cycle detected for myPromise #<MyPromise>")
       );
     } else if (x instanceof MyPromise) {
       // x 为 Promise

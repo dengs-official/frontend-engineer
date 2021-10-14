@@ -3,7 +3,7 @@ const MyPromise = require("./MyPromise.js");
 
 exports.deferred = function () {
   const result = {};
-  result.promise = new Promise((resolve, reject) => {
+  result.promise = new MyPromise((resolve, reject) => {
     result.resolve = resolve;
     result.reject = reject;
   });
