@@ -177,7 +177,14 @@ module.exports = class MyPromise {
       );
     } else if (x instanceof MyPromise) {
       // x 为 Promise
-      x.then(resolve, reject);
+
+      // 如果 x 为 Promise ，则使 promise 接受 x 的状态 注4：
+      // 如果 x 处于等待态， promise 需保持为等待态直至 x 被执行或拒绝
+      // 如果 x 处于执行态，用相同的值执行 promise
+      // 如果 x 处于拒绝态，用相同的据因拒绝 promise
+      x.then((y) => {
+        this._resolution(promise, y, resolve, reject);
+      }, reject);
     } else if (isObj(x) || isFn(x)) {
       // x 为对象或函数
       let then;
