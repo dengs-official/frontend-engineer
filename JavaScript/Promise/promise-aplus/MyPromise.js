@@ -122,7 +122,7 @@ module.exports = class MyPromise {
         value = handler(data);
       } catch (e) {
         // 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e
-        reject(e);
+        return reject(e);
       }
       // 如果 onFulfilled 或者 onRejected 返回一个值 x ，则运行下面的 Promise 解决过程
       this._resolution(promise2, value, resolve, reject);
@@ -178,13 +178,13 @@ module.exports = class MyPromise {
     } else if (x instanceof MyPromise) {
       // x 为 Promise
       x.then(resolve, reject);
-    } else if (x instanceof Object) {
+    } else if (isObj(x) || isFn(x)) {
       // x 为对象或函数
       let then;
       try {
         then = x.then;
       } catch (e) {
-        reject(e);
+        return reject(e);
       }
       if (isFn(then)) {
         // 如果 then 是函数，将 x 作为函数的作用域 this 调用之
@@ -211,7 +211,7 @@ module.exports = class MyPromise {
           );
         } catch (e) {
           if (!called) {
-            reject(e);
+            return reject(e);
           }
         }
       } else {
