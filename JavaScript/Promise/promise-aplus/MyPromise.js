@@ -14,6 +14,9 @@ function isObj(obj) {
 
 module.exports = class MyPromise {
   constructor(executor) {
+    if (!isFn(executor)) {
+      throw new TypeError("MyPromise resolver ${executor} is not a function");
+    }
     // 传入执行函数
     this._state = PENDING; // 状态
     this._value = undefined; // 终值
@@ -32,8 +35,8 @@ module.exports = class MyPromise {
   then(onFulfilled, onRejected) {
     // PENDING状态
     if (this._state === PENDING) {
-      let promise2; // 返回promise2
-      promise2 = new MyPromise((resolve, reject) => {
+      // 返回promise2
+      let promise2 = new MyPromise((resolve, reject) => {
         // 保存成功回调
         this._onResolvedCallbacks.push(() => {
           this._executor(onFulfilled, this._value, promise2, resolve, reject);
@@ -47,10 +50,8 @@ module.exports = class MyPromise {
     }
     // FULFILLED状态
     if (this._state === FULFILLED) {
-      let promise2;
-      promise2 = new MyPromise((resolve, reject) => {
-        // setTimeout(() => {
-        process.nextTick(() => {
+      let promise2 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
           this._executor(onFulfilled, this._value, promise2, resolve, reject);
         });
       });
@@ -58,10 +59,8 @@ module.exports = class MyPromise {
     }
     // PREJECTED状态
     if (this._state === REJECTED) {
-      let promise2;
-      promise2 = new MyPromise((resolve, reject) => {
-        // setTimeout(() => {
-        process.nextTick(() => {
+      let promise2 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
           this._executor(onRejected, this._reason, promise2, resolve, reject, REJECTED);
         });
       });
@@ -104,38 +103,40 @@ module.exports = class MyPromise {
       value.then(this._resolve.bind(this), this._reject.bind(this));
       return;
     }
-    this._state = FULFILLED;
-    // 必须拥有一个不可变的终值
-    this._value = value;
-    // onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用
-    // 当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调
-    // setTimeout(() => {
-    process.nextTick(() => {
-      this._onResolvedCallbacks.forEach((callback) => {
-        callback(this._value);
+    if (this._state === PENDING) {
+      this._state = FULFILLED;
+      // 必须拥有一个不可变的终值
+      this._value = value;
+      // onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用
+      // 当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调
+      setTimeout(() => {
+        this._onResolvedCallbacks.forEach((callback) => {
+          callback(this._value);
+        });
       });
-    });
+    }
   }
   /**
    * 执行函数拒绝回调
    * @param reason
    */
   _reject(reason) {
-    this._state = REJECTED;
-    // 必须拥有一个不可变的据因
-    this._reason = reason;
-    // onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用
-    // 当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调
-    // setTimeout(() => {
-    process.nextTick(() => {
-      // 最后一个异常打印出来
-      if (this._onRejectedCallbacks.length === 0) {
-        console.error(this._reason);
-      }
-      this._onRejectedCallbacks.forEach((callback) => {
-        callback(this._reason);
+    if (this._state === PENDING) {
+      this._state = REJECTED;
+      // 必须拥有一个不可变的据因
+      this._reason = reason;
+      // onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用
+      // 当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调
+      setTimeout(() => {
+        // 最后一个异常打印出来
+        if (this._onRejectedCallbacks.length === 0) {
+          console.error(this._reason);
+        }
+        this._onRejectedCallbacks.forEach((callback) => {
+          callback(this._reason);
+        });
       });
-    });
+    }
   }
   /**
    * Promise 解决过程
