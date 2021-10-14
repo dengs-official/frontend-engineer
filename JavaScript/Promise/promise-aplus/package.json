@@ -1,0 +1,14 @@
+{
+  "name": "promise-aplus",
+  "version": "1.0.0",
+  "description": "Promise A+ 规范实现",
+  "main": "index.js",
+  "scripts": {
+    "test": "promises-aplus-tests MyAdapter"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}

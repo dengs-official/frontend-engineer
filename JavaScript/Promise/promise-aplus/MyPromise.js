@@ -12,7 +12,7 @@ function isObj(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
-export default class MyPromise {
+module.exports = class MyPromise {
   constructor(executor) {
     this._state = PENDING; // 状态
     this._value = undefined; // 终值
@@ -253,4 +253,4 @@ export default class MyPromise {
       resolve(x);
     }
   }
-}
+};
