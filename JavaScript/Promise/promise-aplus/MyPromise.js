@@ -14,6 +14,7 @@ function isObj(obj) {
 
 module.exports = class MyPromise {
   constructor(executor) {
+    // 传入执行函数
     this._state = PENDING; // 状态
     this._value = undefined; // 终值
     this._reason = undefined; // 据因
@@ -35,25 +36,11 @@ module.exports = class MyPromise {
       promise2 = new MyPromise((resolve, reject) => {
         // 保存成功回调
         this._onResolvedCallbacks.push(() => {
-          this._returnPromiseLogic(
-            onFulfilled,
-            this._value,
-            promise2,
-            resolve,
-            reject,
-            FULFILLED
-          );
+          this._executor(onFulfilled, this._value, promise2, resolve, reject);
         });
         // 保存拒绝回调
         this._onRejectedCallbacks.push(() => {
-          this._returnPromiseLogic(
-            onRejected,
-            this._reason,
-            promise2,
-            resolve,
-            reject,
-            REJECTED
-          );
+          this._executor(onRejected, this._reason, promise2, resolve, reject, REJECTED);
         });
       });
       return promise2;
@@ -64,14 +51,7 @@ module.exports = class MyPromise {
       promise2 = new MyPromise((resolve, reject) => {
         // setTimeout(() => {
         process.nextTick(() => {
-          this._returnPromiseLogic(
-            onFulfilled,
-            this._value,
-            promise2,
-            resolve,
-            reject,
-            FULFILLED
-          );
+          this._executor(onFulfilled, this._value, promise2, resolve, reject);
         });
       });
       return promise2;
@@ -82,21 +62,14 @@ module.exports = class MyPromise {
       promise2 = new MyPromise((resolve, reject) => {
         // setTimeout(() => {
         process.nextTick(() => {
-          this._returnPromiseLogic(
-            onRejected,
-            this._reason,
-            promise2,
-            resolve,
-            reject,
-            REJECTED
-          );
+          this._executor(onRejected, this._reason, promise2, resolve, reject, REJECTED);
         });
       });
       return promise2;
     }
   }
   /**
-   *
+   * 新promise内部的执行函数
    * @param handler
    * @param data
    * @param promise2
@@ -104,14 +77,7 @@ module.exports = class MyPromise {
    * @param reject
    * @param type
    */
-  _returnPromiseLogic(
-    handler,
-    data,
-    promise2,
-    resolve,
-    reject,
-    type = FULFILLED
-  ) {
+  _executor(handler, data, promise2, resolve, reject, type = FULFILLED) {
     // 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值
     // 如果 onRejected 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因
     if (!isFn(handler)) {
@@ -133,6 +99,11 @@ module.exports = class MyPromise {
    * @param value
    */
   _resolve(value) {
+    // 当resolve promise时，传递展开
+    if (value instanceof MyPromise) {
+      value.then(this._resolve.bind(this), this._reject.bind(this));
+      return;
+    }
     this._state = FULFILLED;
     // 必须拥有一个不可变的终值
     this._value = value;
@@ -157,6 +128,10 @@ module.exports = class MyPromise {
     // 当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调
     // setTimeout(() => {
     process.nextTick(() => {
+      // 最后一个异常打印出来
+      if (this._onRejectedCallbacks.length === 0) {
+        console.error(this._reason);
+      }
       this._onRejectedCallbacks.forEach((callback) => {
         callback(this._reason);
       });
@@ -172,9 +147,7 @@ module.exports = class MyPromise {
   _resolution(promise, x, resolve, reject) {
     if (x === promise) {
       // x 与 promise相等
-      reject(
-        new TypeError("Chaining cycle detected for myPromise #<MyPromise>")
-      );
+      reject(new TypeError("Chaining cycle detected for myPromise #<MyPromise>"));
     } else if (x instanceof MyPromise) {
       // x 为 Promise
 
