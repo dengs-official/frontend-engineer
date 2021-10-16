@@ -10,7 +10,7 @@ console.log(f2);
 console.log(this);
 
 var v1 = 10; // 声明，初始化为undefined
-let v2 = 20; // 声明，不会初始化，访问抱错
+let v2 = 20; // 声明，不会初始化，访问报错
 var f1 = function () {}; // 声明，初始化为undefined
 function f2() {} // 声明，并赋值
 

@@ -1,6 +1,6 @@
-/**
- * 闭包
- */
+// /**
+//  * 闭包
+//  */
 debugger;
 var max = 10;
 function f1() {
@@ -30,3 +30,29 @@ function f2(f) {
 
 f1()(150);
 f2(f2o);
+
+function fn() {
+  debugger;
+  console.log(f2);
+  var v11 = {
+    name: "v11",
+    age: 20,
+  };
+  var v12 = 30;
+  function f2() {
+    debugger;
+    var v21 = 40;
+    function f3() {
+      debugger;
+      function f4() {
+        debugger;
+        console.log(v11.age, v21);
+      }
+      f4();
+    }
+    f3();
+  }
+  f2();
+}
+
+fn();

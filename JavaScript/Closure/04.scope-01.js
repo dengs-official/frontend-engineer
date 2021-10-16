@@ -8,10 +8,11 @@ var v1 = 10,
 
 function f1() {
   debugger; // f1作用域,链为 f1 -> global
-  var v1 = 100,
-    v3 = 300;
+  var v1 = 100;
+  let v3 = 300;
   function f2(arg) {
     debugger; // f2 作用域，链为 f2 -> f1 -> global
+    console.log(v3);
     var v1 = 1000,
       v4 = 4000;
   }
@@ -19,3 +20,11 @@ function f1() {
   f2(2);
 }
 f1();
+
+for (let i = 0; i < 5; i++) {
+  // 块级作用域
+  setTimeout(() => {
+    debugger;
+    console.log(i);
+  });
+}
