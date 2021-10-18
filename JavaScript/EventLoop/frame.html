@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frame</title>
+
+    <style>
+      #cube {
+        height: 200px;
+        width: 200px;
+        background: red;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cube"></div>
+    <script>
+      let element = document.getElementById("cube");
+      let start = null;
+      let frameCounter = 0;
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        var progress = timestamp - start;
+        element.style.left = Math.min(progress / 10, 200) + "px";
+        element.innerText = frameCounter++;
+        // 不进行耗时操作，每一帧来都刷新,会刷新120次
+        // 进行耗时操作，耗时操作完成才更新那一帧，历史帧会合并
+        let i = 1000;
+        while (i > 0) {
+          console.log("i", i);
+          i--;
+        }
+        if (progress < 2000) {
+          window.requestAnimationFrame(step);
+        }
+      }
+      // 动画
+      window.requestAnimationFrame(step);
+
+      // 空闲调度
+      // window.requestIdleCallback(() => {
+      //   alert("rIC");
+      // });
+    </script>
+  </body>
+</html>
