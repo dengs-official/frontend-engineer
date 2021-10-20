@@ -1,3 +1,6 @@
+/**
+ * 事件循环
+ */
 console.log(1);
 
 setTimeout(() => {

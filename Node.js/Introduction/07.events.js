@@ -1,3 +1,6 @@
+/**
+ * 事件
+ */
 const EventEmitter = require("events");
 
 const eventEmitter = new EventEmitter();
