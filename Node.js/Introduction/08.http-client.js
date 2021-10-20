@@ -7,7 +7,10 @@ const options = {
   method: "GET",
 };
 
+// http.ClientRequest
+// const req = http.get(options, () => {
 const req = http.request(options, (res) => {
+  // res: http.IncomingMessage
   console.log(`状态码：${res.statusCode}`);
   res.on("data", (d) => {
     process.stdout.write(d);
