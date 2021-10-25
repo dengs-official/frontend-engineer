@@ -1,5 +1,3 @@
-import ModuleOne from "./modules/module-one";
+import App from "./App.js";
 
-const one = new ModuleOne("my-module-one");
-
-one.toString();
+import "./styles/index";
