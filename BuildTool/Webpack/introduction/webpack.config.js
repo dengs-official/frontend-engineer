@@ -18,7 +18,7 @@ const baseConfig = (env, argv) => {
     entry: "./src/main.js",
     output: {
       path: resolve("dist"),
-      filename: "[name].[fullhash].js",
+      filename: "js/[name].[fullhash].js",
     },
     resolve: {
       alias: {
@@ -51,7 +51,7 @@ const prodConfig = {
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].[fullhash].css",
+      filename: "css/[name].[fullhash].css",
     }),
   ],
 };
