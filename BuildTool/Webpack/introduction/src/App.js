@@ -1,6 +1,7 @@
 import app from "./App.scss";
+import algorithm from "@/assets/algorithm.png";
+import image from "@/components/Image/";
 const button = import(/* webpackChunkName: 'button' */ "@/components/Button/");
-console.log(app);
 class App {
   constructor(ele) {
     this.data = {};
@@ -14,6 +15,10 @@ class App {
         <li><a href="">关于</a></li>
       </ul>`;
     this.ele.appendChild(navEle);
+
+    const mainEle = document.createElement("main");
+    mainEle.appendChild(image(algorithm));
+    this.ele.appendChild(mainEle);
     button.then(({ default: _ }) => {
       console.log(_());
     });

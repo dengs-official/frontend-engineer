@@ -19,6 +19,7 @@ const baseConfig = (env, argv) => {
     output: {
       path: resolve("dist"),
       filename: "js/[name].[fullhash].js",
+      assetModuleFilename: "assets/[name].[hash][ext][query]",
     },
     resolve: {
       alias: {
@@ -40,6 +41,10 @@ const baseConfig = (env, argv) => {
             "sass-loader",
             "postcss-loader",
           ],
+        },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: "asset/resource",
         },
       ],
     },
