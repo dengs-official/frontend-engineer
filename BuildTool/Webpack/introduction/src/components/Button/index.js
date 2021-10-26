@@ -1,3 +1,4 @@
+import "./index.scss";
 import { isEmpty } from "@/utils/types";
 
 function click(name) {

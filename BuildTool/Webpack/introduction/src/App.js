@@ -1,4 +1,5 @@
 import "./App.scss";
+const button = import(/* webpackChunkName: 'button' */ "@/components/Button/");
 class App {
   constructor(ele) {
     this.data = {};
@@ -11,6 +12,9 @@ class App {
         <li><a href="">关于</a></li>
       </ul>`;
     this.ele.appendChild(navEle);
+    button.then(({ default: _ }) => {
+      console.log(_());
+    });
   }
 }
 

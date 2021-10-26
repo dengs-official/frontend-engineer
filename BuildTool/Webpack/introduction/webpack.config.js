@@ -44,6 +44,7 @@ const baseConfig = (env, argv) => {
 
 const devConfig = {
   mode: "development",
+  devtool: "source-map",
 };
 
 const prodConfig = {
