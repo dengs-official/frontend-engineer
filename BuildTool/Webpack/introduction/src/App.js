@@ -1,11 +1,13 @@
-import "./App.scss";
+import app from "./App.scss";
 const button = import(/* webpackChunkName: 'button' */ "@/components/Button/");
+console.log(app);
 class App {
   constructor(ele) {
     this.data = {};
     this.ele = ele;
+    this.ele.classList.add(app.app);
     const navEle = document.createElement("nav");
-    navEle.className = "nav";
+    navEle.className = app.nav;
     navEle.innerHTML = `
       <ul>
         <li><a href="">首页</a></li>
