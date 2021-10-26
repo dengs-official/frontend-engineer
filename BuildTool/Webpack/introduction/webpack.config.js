@@ -28,8 +28,8 @@ const baseConfig = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.css$/i,
-          use: [devMode ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader"],
+          test: /\.(sa|sc|c)ss$/i,
+          use: [devMode ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader", "sass-loader", "postcss-loader"],
         },
       ],
     },

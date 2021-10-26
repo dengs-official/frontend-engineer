@@ -1,0 +1,15 @@
+#app {
+  .nav {
+    ul {
+      list-style: none;
+      display: flex;
+      a {
+        text-decoration: none;
+        &:link,
+        &:visited {
+          color: blue;
+        }
+      }
+    }
+  }
+}
