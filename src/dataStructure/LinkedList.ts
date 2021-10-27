@@ -75,8 +75,8 @@ export default class LinkedList<T> implements Iterable<T> {
    * @param item
    * @returns
    */
-  public insertTail(item: T): LinkedListNode<T> {
-    const newNode = new LinkedListNode(item);
+  public insertTail(item: T, next: LinkedListNode<T> | null = null): LinkedListNode<T> {
+    const newNode = new LinkedListNode(item, next);
     this.N++;
     if (!this.head) {
       this.head = newNode;
@@ -85,7 +85,7 @@ export default class LinkedList<T> implements Iterable<T> {
     }
     (this.tail as LinkedListNode<T>).next = newNode;
 
-    this.tail = newNode;
+    this.tail = next || newNode;
     return newNode;
   }
   /**

@@ -2,7 +2,6 @@
  * 递归遍历
  */
 import BinaryTreeNode from "@/dataStructure/BinaryTreeNode";
-import { loopFn } from "@/dataStructure/LinkedList";
 
 const defaultCallback = (item: number) => {
   console.log(item);
