@@ -1,0 +1,31 @@
+{
+  "name": "algorithms-demo",
+  "version": "1.0.0",
+  "description": "algorithms learning demo",
+  "main": "index.js",
+  "author": "dengs.official",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
+    "test": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only",
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^3.11.0",
+    "typescript": "^4.4.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  }
+}
