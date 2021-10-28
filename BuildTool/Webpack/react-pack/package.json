@@ -1,28 +1,30 @@
 {
-  "name": "multi-page",
+  "name": "reactpack",
   "version": "1.0.0",
-  "description": "",
+  "description": "webpack with react",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack serve --mode=development",
+    "dev": "node --trace-deprecation node_modules/.bin/webpack serve --mode=development",
     "build": "webpack --mode=production"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
+    "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
     "html-webpack-plugin": "^5.5.0",
     "webpack": "^5.60.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.3.1"
-  },
-  "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "webpack-dev-server": "^4.4.0",
+    "webpack-merge": "^5.8.0"
   }
 }
