@@ -1,8 +1,10 @@
 const path = require("path");
+const webpack = require("webpack");
 const merge = require("webpack-merge").merge;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const resolve = (file) => path.resolve(file);
 
@@ -19,6 +21,7 @@ const baseConfig = (env, argv) => {
       filename: "js/[name].[fullhash].js",
       clean: true,
     },
+    target: "web",
     resolve: {
       extensions: [".js", ".jsx"],
       alias: {
@@ -35,7 +38,7 @@ const baseConfig = (env, argv) => {
         {
           test: /\.(sa|sc|c)ss/,
           include: /src/,
-          use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
+          use: [prodMode ? MiniCssExtractPlugin.loader : "style-loader", "css-loader", "postcss-loader", "sass-loader"],
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -50,9 +53,6 @@ const baseConfig = (env, argv) => {
       new HtmlWebpackPlugin({
         template: resolve("public/index.html"),
         inject: true,
-      }),
-      new MiniCssExtractPlugin({
-        filename: "css/[name].[fullhash].css",
       }),
     ],
     optimization: {
@@ -71,8 +71,17 @@ const baseConfig = (env, argv) => {
 
 const devConfig = {
   mode: "development",
+  devServer: {
+    hot: true,
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
 };
 const prodConfig = {
   mode: "production",
-  plugins: [new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: false })],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/[name].[fullhash].css",
+    }),
+    new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: false }),
+  ],
 };
