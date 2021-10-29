@@ -35,7 +35,7 @@ const baseConfig = (env, argv) => {
         {
           test: /\.(sa|sc|c)ss/,
           include: /src/,
-          use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader", "postcss-loader"],
+          use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
