@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const merge = require("webpack-merge").merge;
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -60,6 +61,10 @@ const baseConfig = (env, argv) => {
 const devConfig = {
   mode: "development",
   devtool: "source-map",
+  devServer: {
+    hot: true,
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()],
 };
 
 const prodConfig = {
