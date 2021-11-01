@@ -1,3 +1,8 @@
+import babel from "@rollup/plugin-babel";
+import { terser } from "rollup-plugin-terser";
+
+const plugins = [babel({ babelHelpers: "bundled" }), terser()];
+
 /**
  * @type {import('rollup').RollupOptions}
  */
@@ -10,6 +15,7 @@ const config = [
       format: "umd",
       name: "Single",
     },
+    plugins,
   },
   {
     // multiple
@@ -18,6 +24,7 @@ const config = [
       dir: "dist",
       format: "es",
     },
+    plugins,
   },
 ];
 
