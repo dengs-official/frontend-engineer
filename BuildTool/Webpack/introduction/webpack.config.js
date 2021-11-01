@@ -54,6 +54,7 @@ const baseConfig = (env, argv) => {
         template: resolve("public/index.html"),
         favicon: resolve("public/favicon.svg"),
       }),
+      new CleanWebpackPlugin(),
     ],
   };
 };
@@ -70,7 +71,6 @@ const devConfig = {
 const prodConfig = {
   mode: "production",
   plugins: [
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "css/[name].[fullhash].css",
     }),

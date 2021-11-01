@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --trace-deprecation node_modules/.bin/webpack serve --mode=development",
+    "watch": "webpack watch --mode=development",
     "build": "webpack --mode=production --progress"
   },
   "keywords": [
