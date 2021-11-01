@@ -1,13 +1,24 @@
 /**
  * @type {import('rollup').RollupOptions}
  */
-const config = {
-  input: "src/main.js",
-  output: {
-    file: "dist/bundle.js",
-    format: "umd",
-    name: "RollupModule",
+const config = [
+  {
+    // single
+    input: "src/single.js",
+    output: {
+      file: "dist/single.js",
+      format: "umd",
+      name: "Single",
+    },
   },
-};
+  {
+    // multiple
+    input: "src/multiple.js",
+    output: {
+      dir: "dist",
+      format: "es",
+    },
+  },
+];
 
 export default config;
