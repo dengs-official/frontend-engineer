@@ -23,3 +23,9 @@ bindEvent("connect-bluetooth", "click", async () => {
   btn.removeAttribute("disabled");
   setContent("device-name", device.name || `ID: ${device.id}`);
 });
+
+// keyboard Structures
+window.addEventListener("keyup", (event) => {
+  event.preventDefault();
+  console.log(event.key);
+});
