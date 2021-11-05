@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page2</title>
+  </head>
+  <body>
+    <input id="text" />
+    <button id="send">发送</button>
+    <div>接收到的消息是: <b id="received"></b></div>
+
+    <script>
+      window.addEventListener("message", (e) => {
+        if (e.data.type === "custom") {
+          document.getElementById("received").innerText = e.data.msg;
+        }
+      });
+      document.getElementById("send").addEventListener("click", (e) => {
+        const text = document.getElementById("text").value;
+        // 通过parent直接修改
+        // window.parent.document.getElementById("received").innerText = text;
+        // 通过parent postMessage
+        window.parent.postMessage({ type: "custom", msg: text });
+      });
+    </script>
+  </body>
+</html>

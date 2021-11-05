@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PostMessage</title>
+  </head>
+  <body>
+    <input id="text" />
+    <button id="send">发送</button>
+    <div>接收到的消息是: <b id="received"></b></div>
+    <hr />
+    <iframe name="page" src="./page2.html"></iframe>
+
+    <script>
+      window.addEventListener("message", (e) => {
+        if (e.data.type === "custom") {
+          document.getElementById("received").innerText = e.data.msg;
+        }
+      });
+      document.getElementById("send").addEventListener("click", () => {
+        const text = document.getElementById("text").value;
+        // 通过ifrme直接修改
+        // window.page.document.getElementById("received").innerText = text;
+        // 通过iframe postMessage
+        window.page.postMessage({ type: "custom", msg: text });
+      });
+    </script>
+  </body>
+</html>

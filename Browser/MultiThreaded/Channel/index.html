@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Channel</title>
+  </head>
+  <body>
+    <input id="text" />
+    <button id="send">发送</button>
+    <div>接收到的消息是: <b id="received"></b></div>
+    <hr />
+    <iframe name="page" src="./page.html"></iframe>
+
+    <script>
+      const channel = new MessageChannel();
+      // 通过port1接收消息
+      channel.port1.onmessage = (e) => {
+        document.getElementById("received").innerText = e.data;
+      };
+      window.page.onload = (e) => {
+        // 将port2传通过iframe过去
+        window.page.postMessage("init", "*", [channel.port2]);
+      };
+      document.getElementById("send").addEventListener("click", () => {
+        const text = document.getElementById("text").value;
+        // 通过port1发送消息
+        channel.port1.postMessage(text);
+      });
+    </script>
+  </body>
+</html>
