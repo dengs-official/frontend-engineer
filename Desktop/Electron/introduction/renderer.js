@@ -1,8 +1,25 @@
-document.getElementById("toggle-dark-mode").addEventListener("click", async () => {
+function bindEvent(id, event, callback) {
+  document.getElementById(id).addEventListener(event, callback);
+}
+function setContent(id, content) {
+  document.getElementById(id).innerHTML = content;
+}
+
+// dark-mode
+bindEvent("toggle-dark-mode", "click", async () => {
   const isDarkMode = await window.darkMode.toggle();
-  document.getElementById("theme-source").innerHTML = isDarkMode ? "Dark" : "Light";
+  setContent("theme-source", isDarkMode ? "Dark" : "Light");
 });
-document.getElementById("reset-to-system").addEventListener("click", async () => {
+bindEvent("reset-to-system", "click", async () => {
   await window.darkMode.system();
-  document.getElementById("theme-source").innerHTML = "System";
+  setContent("theme-source", "System");
+});
+
+// device-access
+bindEvent("connect-bluetooth", "click", async () => {
+  const btn = document.getElementById("connect-bluetooth");
+  btn.setAttribute("disabled", "disabled");
+  const device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
+  btn.removeAttribute("disabled");
+  setContent("device-name", device.name || `ID: ${device.id}`);
 });

@@ -11,6 +11,14 @@ function createWindow() {
   });
   win.loadFile("index.html");
 
+  win.webContents.on("select-bluetooth-device", (event, deviceList, callback) => {
+    event.preventDefault();
+    console.log(deviceList);
+    if (deviceList && deviceList.length > 0) {
+      callback(deviceList[0].deviceId);
+    }
+  });
+
   ipcMain.handle("dark-mode:toggle", () => {
     if (nativeTheme.shouldUseDarkColors) {
       nativeTheme.themeSource = "light";

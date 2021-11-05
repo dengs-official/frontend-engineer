@@ -11,13 +11,22 @@
   </head>
   <body>
     <h1>Hello World!</h1>
+
+    <hr />
+    <h2>Basic</h2>
     We are using Node.js <span id="node-version"></span>, Chromium <span id="chrome-version"></span>, and Electron
     <span id="electron-version"></span>.
 
-    <br />
+    <hr />
+    <h2>Dark Mode</h2>
     <p>Current theme source: <strong id="theme-source">System</strong></p>
     <button id="toggle-dark-mode">Toggle Dark Mode</button>
     <button id="reset-to-system">Reset to System Theme</button>
+
+    <hr />
+    <h2>Device Access</h2>
+    <button id="connect-bluetooth">Test Bluetooth</button>
+    <p>Currently selected bluetooth device: <strong id="device-name""></strong></p>
 
     <script src="./renderer.js"></script>
   </body>
