@@ -1,0 +1,14 @@
+{
+  "name": "c-addons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:lib": "node-gyp configure && node-gyp build"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "node-gyp": "^8.4.0"
+  }
+}
