@@ -1,6 +1,8 @@
 const path = require("path");
 const { app, BrowserWindow, Menu, MenuItem, ipcMain, nativeTheme } = require("electron");
 
+process.env.isDebug = !!process.argv.filter((item) => item.includes("--inspect")).length;
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
@@ -66,3 +68,8 @@ app.on("window-all-closed", function () {
 app.on("activate", function () {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
+
+// app setting
+if (process.env.isDebug === "true") {
+  app.commandLine.appendSwitch("remote-debugging-port", "9192");
+}
