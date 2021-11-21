@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "description": "网易云音乐Electron版",
   "scripts": {
+    "start-webpack": "cross-env NODE_ENV=development webpack watch --progress --color",
     "start-electron": "electron ./dist/main/main.js",
     "debug-electron": "cross-env DEBUG=true electron ./dist/main/main.js --inspect=5858",
-    "start-webpack": "cross-env NODE_ENV=development webpack watch --progress --color"
+    "build-webpack": "cross-env NODE_ENV=production webpack --progress --color",
+    "build-electron": "electron-builder",
+    "build": "npm run build-webpack && npm run build-electron"
+  },
+  "main": "dist/main/main.js",
+  "build": {
+    "directories": {
+      "output": "release"
+    }
   },
   "author": "dengs.official",
   "license": "MIT",
