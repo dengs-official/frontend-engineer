@@ -21,7 +21,7 @@ const commonConfig = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "ts-loader",
+        loader: "babel-loader",
         exclude: /node_modules/,
       },
     ],
