@@ -1,0 +1,56 @@
+{
+  "name": "vite-vue3-demo",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "stage": "vite build --mode staging",
+    "build": "vite build",
+    "build:legacy": "vite build --mode legacy",
+    "serve": "vite preview",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "lint:html": "prettier --write **/*.{html,js,jsx,vue}",
+    "lint:css": "stylelint --fix **/*.{css,less,sass,scss,html,vue}",
+    "lint:js": "eslint --fix **/*.{js,jsx,vue}",
+    "commit": "git-cz"
+  },
+  "dependencies": {
+    "vue": "^3.2.6",
+    "vue-router": "^4.0.11"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^1.5.3",
+    "@vitejs/plugin-vue": "^1.6.1",
+    "@vue/compiler-sfc": "^3.2.6",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^7.17.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.4.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-prettier": "^1.2.0",
+    "vite": "^2.5.4"
+  },
+  "lint-staged": {
+    "*.{html,js,jsx,vue}": [
+      "npm run lint:html"
+    ],
+    "*.{css,less,sass,scss,html,vue}": [
+      "npm run lint:css"
+    ],
+    "*.{js,jsx,vue}": [
+      "npm run lint:js"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
