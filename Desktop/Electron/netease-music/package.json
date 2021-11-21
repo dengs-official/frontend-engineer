@@ -1,0 +1,26 @@
+{
+  "name": "netease-music",
+  "version": "1.0.0",
+  "description": "网易云音乐Electron版",
+  "scripts": {
+    "start-electron": "electron ./dist/main/main.js",
+    "debug-electron": "cross-env DEBUG=true electron ./dist/main/main.js --inspect=5858",
+    "start-webpack": "cross-env NODE_ENV=development webpack watch --progress --color"
+  },
+  "author": "dengs.official",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^16.11.9",
+    "cross-env": "^7.0.3",
+    "electron": "^16.0.1",
+    "electron-builder": "^22.14.5",
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.2",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-merge": "^5.8.0"
+  }
+}
