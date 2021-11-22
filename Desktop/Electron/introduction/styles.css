@@ -1,12 +1,17 @@
+body {
+  background-color: var(--bgColor);
+  color: var(--fontColor);
+}
+
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #333;
-    color: white;
+    --bgColor: #333;
+    --fontColor: #fff;
   }
 }
 @media (prefers-color-scheme: light) {
   body {
-    background-color: #ddd;
-    color: black;
+    --bgColor: #ddd;
+    --fontColor: black;
   }
 }
