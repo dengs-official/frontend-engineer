@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "网易云音乐Electron版",
   "scripts": {
-    "start-webpack": "cross-env NODE_ENV=development webpack watch --progress --color",
-    "start-electron": "electron ./dist/main/main.js",
-    "debug-electron": "cross-env DEBUG=true electron ./dist/main/main.js --inspect=5858",
-    "start": "concurrently \"npm run start-webpack\" \"npm run start-electron\"",
-    "build-webpack": "cross-env NODE_ENV=production webpack --progress --color",
-    "build-electron": "electron-builder",
-    "build": "npm run build-webpack && npm run build-electron",
+    "start-renderer": "cross-env NODE_ENV=development webpack serve -c ./scripts/webpack.config.renderer.js",
+    "start-main": "cross-env NODE_ENV=development webpack -c ./scripts/webpack.config.main.js && electron ./dist/main/main.js",
+    "debug-main": "cross-env DEBUG=true electron ./dist/main/main.js --inspect=5858",
+    "start": "concurrently \"npm run start-rebderer\" \"npm run start-main\"",
+    "build-renderer": "cross-env NODE_ENV=production webpack --progress --color -c ./scripts/webpack.config.renderer.js",
+    "build-main": "cross-env NODE_ENV=production webpack -c ./scripts/webpack.config.main.js && electron-builder",
+    "build": "npm run build-renderer && npm run build-main",
     "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
     "lint:html": "prettier --write **/*.{html,ts,tsx}",
     "lint:css": "stylelint --fix **/*.{css,less,sass,scss,html}",
@@ -19,7 +19,8 @@
   "build": {
     "directories": {
       "output": "build"
-    }
+    },
+    "asar": false
   },
   "author": "dengs.official",
   "license": "MIT",
@@ -29,6 +30,7 @@
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
     "@babel/preset-typescript": "^7.16.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.2",
     "@types/node": "^16.11.9",
     "@types/react": "^17.0.35",
     "@types/react-dom": "^17.0.11",

@@ -13,7 +13,9 @@ function createWindow(): void {
       preload: r("preload.js"),
     },
   });
-  mainWin.loadFile(r("../renderer/index.html"));
+  // mainWin.loadFile(r("../renderer/index.html"));
+  mainWin.loadURL("http://127.0.0.1:9000");
+  mainWin.webContents.openDevTools();
 }
 
 app.whenReady().then(() => createWindow());

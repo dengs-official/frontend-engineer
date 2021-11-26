@@ -1,11 +1,11 @@
-import * as React from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
-const APP = () => <h1>Main Page</h1>;
+import App from "./app";
 
 ReactDOM.render(
   <React.StrictMode>
-    <APP />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

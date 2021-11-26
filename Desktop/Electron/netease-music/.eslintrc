@@ -1,5 +1,9 @@
 {
   "root": true,
+  "env": {
+    "node": true,
+    "browser": true
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020,
@@ -16,5 +20,12 @@
     "plugin:prettier/recommended"
   ],
   "plugins": ["react", "react-hooks", "@typescript-eslint"],
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/no-var-requires": 0
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }
