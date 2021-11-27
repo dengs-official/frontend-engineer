@@ -1,6 +1,11 @@
 const path = require("path");
 const { app, BrowserWindow, Menu, MenuItem, ipcMain, nativeTheme } = require("electron");
 
+require("electron-reload")(__filename, {
+  electron: path.join(__dirname, "node_modules", ".bin", "electron"),
+  // hardResetMethod: "exit",
+});
+
 process.env.isDebug = !!process.argv.filter((item) => item.includes("--inspect")).length;
 
 function createWindow() {
@@ -43,10 +48,11 @@ menu.append(
     ],
   })
 );
-// Menu.setApplicationMenu(menu);
+Menu.setApplicationMenu(menu);
 
 // ipc
 ipcMain.handle("dark-mode:toggle", () => {
+  // console.log("test");
   if (nativeTheme.shouldUseDarkColors) {
     nativeTheme.themeSource = "light";
   } else {

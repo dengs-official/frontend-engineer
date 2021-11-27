@@ -4,9 +4,9 @@
   "description": "网易云音乐Electron版",
   "scripts": {
     "start-renderer": "cross-env NODE_ENV=development webpack serve -c ./scripts/webpack.config.renderer.js",
-    "start-main": "cross-env NODE_ENV=development webpack -c ./scripts/webpack.config.main.js && electron ./dist/main/main.js",
+    "start-main": "concurrently \"cross-env NODE_ENV=development webpack watch -c ./scripts/webpack.config.main.js\" \"electron ./dist/main/main.js\"",
     "debug-main": "cross-env DEBUG=true electron ./dist/main/main.js --inspect=5858",
-    "start": "concurrently \"npm run start-rebderer\" \"npm run start-main\"",
+    "start": "concurrently \"npm run start-renderer\" \"npm run start-main\"",
     "build-renderer": "cross-env NODE_ENV=production webpack --progress --color -c ./scripts/webpack.config.renderer.js",
     "build-main": "cross-env NODE_ENV=production webpack -c ./scripts/webpack.config.main.js && electron-builder",
     "build": "npm run build-renderer && npm run build-main",
